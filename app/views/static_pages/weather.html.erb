@@ -1,1 +1,12 @@
-Weather
+<h1>Weather</h1>
+<% @hours.each do |hour| %>
+<h3><%= Time.at(hour['dt']) %></h3>
+<dl>
+<dt>Temp</dt>
+<dd><%= (hour['main']['temp'] - 273.15).round(2) %></dd>
+<dt>Pressure</dt>
+<dd><%= hour['main']['pressure'] %></dd>
+<dt>Humidity</dt>
+<dd><%= hour['main']['humidity'] %></dd>
+</dl>
+<% end %>
