@@ -1,0 +1,11 @@
+<h1>Cities</h1>
+<%= link_to "New city", cities_new_path  %>
+<div>Total number of cities: <%= @cities.count %></div>
+<% @cities.each do |city| %>
+<div>Name:</div>
+<div><%= link_to city.name, city  %></div>
+<div>Country:</div>
+<div><%= city.country %></div>
+<% end %>
+
+

@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  get 'cities/index'
+  get 'cities' => 'cities#index'
+  get 'cities/show'
+
+  get 'cities/edit'
+
+  get 'cities/create'
+
+  get 'cities/new'
+
+  resources :cities
+  resources :hours
+
   get 'static_pages/home'
   get 'static_pages/weather'
   get 'weather' => 'static_pages#weather'
