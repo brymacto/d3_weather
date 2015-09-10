@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  temp: 1.5
+  pressure: 1
+  humidity: 1
+  temp_min: 1.5
+  temp_max: 1.5
+  wind_speed: 1.5
+  wind_deg: 1
+  cloudiness: 1
+  description: MyString
+  icon: MyString
+
+two:
+  temp: 1.5
+  pressure: 1
+  humidity: 1
+  temp_min: 1.5
+  temp_max: 1.5
+  wind_speed: 1.5
+  wind_deg: 1
+  cloudiness: 1
+  description: MyString
+  icon: MyString
