@@ -1,59 +1,58 @@
 <h1>Weather</h1>
 <table>
-<tr>
-<th>Time</th><th>Temp</th><th>Pressure</th><th>Humidity</th>
-</tr>
-<% @hours.each do |hour| %>
-<tr>
-<td><%= Time.at(hour['dt']).strftime('%B %e, %Y, %l:%M %p') %></td>
-<td><%= (hour['main']['temp'] - 273.15).round(2) %></td>
-<td><%= hour['main']['pressure'] %></td>
-<td><%= hour['main']['humidity'] %></td>
-<% end %>
-
-
-<script>
-  var temp_data = []
+  <tr>
+    <th>Time</th><th>Temp</th><th>Pressure</th><th>Humidity</th>
+  </tr>
   <% @hours.each do |hour| %>
-    temp_data.push(<%= (hour['main']['temp'] - 273.15).round(2) %>)
-  <% end %>
+  <tr>
+    <td><%= Time.at(hour['dt']).strftime('%B %e, %Y, %l:%M %p') %></td>
+    <td><%= (hour['main']['temp'] - 273.15).round(2) %></td>
+    <td><%= hour['main']['pressure'] %></td>
+    <td><%= hour['main']['humidity'] %></td>
+    <% end %>
 
-  var w = 500;
-  var h = 500;
+
+    <script>
+      var temp_data = []
+      <% @hours.each do |hour| %>
+      temp_data.push(<%= (hour['main']['temp'] - 273.15).round(2) %>)
+      <% end %>
+
+      var w = 500;
+      var h = 200;
   var barPadding = 1;  // <-- New!
   var padding = 20;
   var svg = d3.select("body")
-    .append("svg")
-    .attr("width", w)
-    .attr("height", h);
-
+  .append("svg")
+  .attr("width", w)
+  .attr("height", h);
 
   var xScale = d3.scale.linear()
-  .domain([0, d3.max(temp_data, function(d) { return d[0]; })])
-  .range([padding, w - padding * 2]);
-  var yScale = d3.scale.linear()
-  .domain([0, d3.max(temp_data, function(d) { return d[1]; })])
-  .range([h - padding, padding]);
-  var xAxis = d3.svg.axis()
-  .scale(xScale)
-  .orient("bottom")
-  .ticks(5); 
+  .domain([0, d3.max(temp_data)])
+  .range([0, w]);
 
-svg.selectAll("rect")
-   .data(temp_data)
-   .enter()
-   .append("rect")
-   .attr("x", function(d, i) {
+  var yScale = d3.scale.linear()
+  .domain([0, d3.max(temp_data)])
+  .range([0, h - padding]);
+
+
+  svg.selectAll("rect")
+  .data(temp_data)
+  .enter()
+  .append("rect")
+  .attr("x", function(d, i) {
     return i * (w / temp_data.length);
-    })
-   .attr("y", function(d) {
-      return h - d;  //Height minus data value
-    })
-   .attr("width", w / temp_data.length - barPadding)
-   .attr("height", function(d) {
-    return d;
   })
-   .attr("fill", 'gainsboro');
+  .attr("y", function(d) {
+      return h - yScale(d);  //Height minus data value
+    })
+  .attr("width", w / temp_data.length - barPadding)
+  .attr("height", function(d) {
+    return yScale(d);
+  })
+  .attr("fill", 'gainsboro');
+
+
 
 
 </script>
