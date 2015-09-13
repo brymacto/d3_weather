@@ -6,6 +6,7 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
+    get_hours
   end
 
   def edit
@@ -28,9 +29,10 @@ class CitiesController < ApplicationController
     hours_details = response['list']
     @hours = []
     hours_details.each do |hour_details|
-      @hours << Hour.create()
+      @hours << Hour.new(temp: hour_details['main']['temp'] )
     end
-    puts @hours
+    binding.pry
+    # puts @hours
   end
   # helper_method :get_hours
   # Uncomment the above to access method from view.
@@ -44,3 +46,6 @@ class CitiesController < ApplicationController
       params.require(:city).permit(:name, :country)
     end
 end
+
+
+# :temp, :pressure, :humidity, :temp_min, :temp_max, :wind_speed, :wind_deg, :cloudiness, :description, :icon, :city_id
