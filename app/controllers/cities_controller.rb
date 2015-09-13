@@ -17,7 +17,6 @@ class CitiesController < ApplicationController
     @city = City.new(city_params)
 
     if @city.save
-      @city.get_hours(@city)
       redirect_to cities_path
     else
       render 'new'
