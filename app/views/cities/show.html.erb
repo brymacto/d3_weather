@@ -7,3 +7,23 @@
 <div><%= @city.name  %></div>
 <div>Country:</div>
 <div><%= @city.country %></div>
+
+
+<% if @hours %>
+<h3>Hours</h3>
+
+<table>
+<% @hours.each do |hour| %>
+<tr>
+  <th>Time</th>
+  <th>Temperature</th>
+  <th>Pressure</th>
+  <th>Wind speed</th>
+  <th>Wind direction</th>
+  <th>Cloudiness</th>
+</tr>
+<%= render hour %>
+<% end %>
+</table>
+
+<% end %>

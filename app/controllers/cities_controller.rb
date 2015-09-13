@@ -30,23 +30,27 @@ class CitiesController < ApplicationController
     @hours = []
     hours_details.each do |hour_details|
       @hours << Hour.new(
-        temp: hour_details['main']['temp'], 
+        temp: k_to_celsius(hour_details['main']['temp']), 
         pressure: hour_details['main']['pressure'], 
         humidity: hour_details['main']['humidity'],
-        temp_min: hour_details['main']['temp_min'],
-        temp_max: hour_details['main']['temp_max'],
+        temp_min:  k_to_celsius(hour_details['main']['temp_min']),
+        temp_max:  k_to_celsius(hour_details['main']['temp_max']),
         wind_speed: hour_details['wind']['speed'],
         wind_deg: hour_details['wind']['deg'],
         cloudiness: hour_details['clouds']['all'],
+        weather_time: Time.at(hour_details['dt']),
         # description:
         # icon:
         # For 2 above, API provides array.  TODO: handle arrays of weather.
         city_id: params[:id]
       )
     end
-    binding.pry
-    # puts @hours
   end
+
+  def k_to_celsius(kelvins)
+    (kelvins - 273.15).round(2)
+  end
+
   # helper_method :get_hours
   # Uncomment the above to access method from view.
 

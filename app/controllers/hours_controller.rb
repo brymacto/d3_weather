@@ -17,7 +17,7 @@ class HoursController < ApplicationController
 
   private
   def hour_params
-    params.require(:hour).permit(:temp, :pressure, :humidity, :temp_min, :temp_max, :wind_speed, :wind_deg, :cloudiness, :description, :icon, :city_id)
+    params.require(:hour).permit(:temp, :pressure, :humidity, :temp_min, :temp_max, :wind_speed, :wind_deg, :cloudiness, :description, :icon, :weather_time, :city_id)
   end
 end
 
