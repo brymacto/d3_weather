@@ -29,7 +29,20 @@ class CitiesController < ApplicationController
     hours_details = response['list']
     @hours = []
     hours_details.each do |hour_details|
-      @hours << Hour.new(temp: hour_details['main']['temp'] )
+      @hours << Hour.new(
+        temp: hour_details['main']['temp'], 
+        pressure: hour_details['main']['pressure'], 
+        humidity: hour_details['main']['humidity'],
+        temp_min: hour_details['main']['temp_min'],
+        temp_max: hour_details['main']['temp_max'],
+        wind_speed: hour_details['wind']['speed'],
+        wind_deg: hour_details['wind']['deg'],
+        cloudiness: hour_details['clouds']['all'],
+        # description:
+        # icon:
+        # For 2 above, API provides array.  TODO: handle arrays of weather.
+        city_id: params[:id]
+      )
     end
     binding.pry
     # puts @hours
