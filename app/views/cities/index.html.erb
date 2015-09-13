@@ -3,7 +3,7 @@
 <div>Total number of cities: <%= @cities.count %></div>
 <% @cities.each do |city| %>
 <div>Name:</div>
-<div><%= link_to city.name, city  %></div>
+<div><%= link_to city.name, city_path(city)  %></div>
 <div>Country:</div>
 <div><%= city.country %></div>
 <% end %>

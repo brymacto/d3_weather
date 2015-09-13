@@ -1,2 +1,9 @@
 <h1>Cities#show</h1>
-<p>Find me in app/views/cities/show.html.erb</p>
+
+<%= link_to 'edit this city', edit_city_path(@city)  %>
+
+
+<div>Name:</div>
+<div><%= @city.name  %></div>
+<div>Country:</div>
+<div><%= @city.country %></div>
