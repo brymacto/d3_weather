@@ -1,5 +1,6 @@
 <tr>
-  <td><%= hour.weather_time.strftime('%B %e, %Y, %l:%M %p') %></td>
+  <td><%= hour.weather_time.strftime('%B %e %Y') %></td>
+  <td><%= hour.weather_time.strftime('%l:%M %p') %></td>
   <td><%= hour.temp %></td>
   <td><%= hour.pressure %></td>
   <td><%= hour.wind_speed %></td>

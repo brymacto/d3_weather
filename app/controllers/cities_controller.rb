@@ -6,7 +6,7 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
-    get_hours
+    get_hours(@city)
   end
 
   def edit
@@ -17,15 +17,15 @@ class CitiesController < ApplicationController
     @city = City.new(city_params)
 
     if @city.save
-      @city.get_hours
+      @city.get_hours(@city)
       redirect_to cities_path
     else
       render 'new'
     end
   end
 
-  def get_hours
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=Toronto,CA&APPID=#{ENV['open_weather_key']}")
+  def get_hours(city)
+    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name},#{city.country}&APPID=#{ENV['open_weather_key']}")
     hours_details = response['list']
     @hours = []
     hours_details.each do |hour_details|
