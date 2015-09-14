@@ -10,4 +10,8 @@ class City < ActiveRecord::Base
     end
   end
 
+  def full_name 
+    "#{name.titleize}, #{country.upcase}"
+  end
+
 end

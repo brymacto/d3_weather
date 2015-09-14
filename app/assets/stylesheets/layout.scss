@@ -9,6 +9,7 @@ header {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   position: fixed;
+  top: 0px;
   .header_outer {
     color: $c_white;
      @include outer-container;
@@ -20,7 +21,10 @@ header {
 }
 
 .belowHeader {
-  padding-top: 7rem;
+  margin-top: 7rem;
+}
+.belowHeader__overlap {
+  margin-top: 6rem;
 }
 
 .logo {
@@ -33,5 +37,9 @@ header {
                 7px 7px $c_blue1, 8px 8px $c_blue1;
   .h {
     // color: $c_blue1;
+  }
+  a {
+    color:#fff;
+    text-decoration: none;
   }
 }
