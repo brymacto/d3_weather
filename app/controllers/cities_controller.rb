@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   include ActiveModel::Validations
-  validate :city_in_open_weather
+  
   include HTTParty
   def index
     @cities = City.all.order(name: :asc)
@@ -19,7 +19,6 @@ class CitiesController < ApplicationController
     response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{params[:city][:name]},#{params[:city] [:country]}&APPID=#{ENV['open_weather_key']}")
     # city_params['http_response'] = response['cod']
     @city = City.new(city_params.merge(:http_response => response['cod']))
-    binding.pry
     @city.open_weather_id = response['city_id']
     if @city.save
       redirect_to cities_path
@@ -71,17 +70,12 @@ class CitiesController < ApplicationController
     redirect_to cities_path
   end
 
+
   private
     def city_params
       params.require(:city).permit(:name, :country, :http_response)
     end
 
-  def city_in_open_weather
-    binding.pry
-    if :http_response != '200'
-      errors.add(:base, "This city/country combination is not available in the Open Weather database (error #{:http_response}).  Please select another city and country name.")
-    end
-  end
 end
 
 
