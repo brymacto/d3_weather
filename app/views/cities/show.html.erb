@@ -41,13 +41,28 @@
   .attr("height", h);
 
   var xScale = d3.scale.linear()
-  .domain([0, Math.max.apply(Math,temp_data.map(function(o){return o.weather_time;}))])
-
-  .range([0, w]);
+  .domain([Math.min.apply(Math,temp_data.map(function(o){return o.weather_time;})), Math.max.apply(Math,temp_data.map(function(o){return o.weather_time;}))])
+  .range([padding * 2, w]);
 
   var yScale = d3.scale.linear()
-  .domain([0, Math.max.apply(Math,temp_data.map(function(o){return o.temp;}))])
-  .range([0, h - padding]);
+  .domain([Math.min.apply(Math,temp_data.map(function(o){return o.temp;})), Math.max.apply(Math,temp_data.map(function(o){return o.temp;}))])
+  .range([h - padding, 0]);
+
+
+  xAxis = d3.svg.axis()
+    .scale(xScale),
+  
+yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+svg.append("svg:g")
+    .attr("transform", "translate(0," + (h - padding) + ")")
+    .call(xAxis);
+
+    svg.append("svg:g")
+    .attr("transform", "translate(" + (padding * 2) + ",0)")
+    .call(yAxis);
 
 
 // 
