@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913221951) do
+ActiveRecord::Schema.define(version: 20150914000057) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20150913221951) do
     t.integer  "open_weather_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.float    "lat"
+    t.float    "long"
+    t.string   "http_response"
   end
 
   create_table "hours", force: :cascade do |t|
