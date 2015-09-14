@@ -17,9 +17,14 @@ class CitiesController < ApplicationController
 
   def create
     response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{params[:city][:name]},#{params[:city] [:country]}&APPID=#{ENV['open_weather_key']}")
-    # city_params['http_response'] = response['cod']
-    @city = City.new(city_params.merge(:http_response => response['cod']))
+    http_resp = response['cod']
+    @city = City.new(city_params.merge(:http_response => http_resp))
     @city.open_weather_id = response['city_id']
+
+    response_coords = HTTParty.get("http://api.openweathermap.org/data/2.5/weather?id=#{@city.open_weather_id}")
+    @city.long = response_coords['coord']['lon']
+    @city.lat = response_coords['coord']['lat']
+
     if @city.save
       redirect_to cities_path
     else
