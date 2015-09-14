@@ -29,4 +29,50 @@
 <% end %>
 </table>
 
+<script>
+      var temp_data = []
+      <% @hours.each do |hour| %>
+      temp_data.push(<%= hour.temp %>)
+      <% end %>
+
+      var w = 500;
+      var h = 200;
+  var barPadding = 1;  // <-- New!
+  var padding = 20;
+  var svg = d3.select("body")
+  .append("svg")
+  .attr("width", w)
+  .attr("height", h);
+
+  var xScale = d3.scale.linear()
+  .domain([0, d3.max(temp_data)])
+  .range([0, w]);
+
+  var yScale = d3.scale.linear()
+  .domain([0, d3.max(temp_data)])
+  .range([0, h - padding]);
+
+
+  svg.selectAll("rect")
+  .data(temp_data)
+  .enter()
+  .append("rect")
+  .attr("x", function(d, i) {
+    return i * (w / temp_data.length);
+  })
+  .attr("y", function(d) {
+      return h - yScale(d);  //Height minus data value
+    })
+  .attr("width", w / temp_data.length - barPadding)
+  .attr("height", function(d) {
+    return yScale(d);
+  })
+  .attr("fill", 'gainsboro');
+
+
+
+
+</script>
+
 <% end %>
+
