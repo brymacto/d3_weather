@@ -5,20 +5,22 @@
     <h1><%= @city.full_name  %></h1>    
   </div>
 </div>
-<section class="mainWrapper">
+
+<div class="mainWrapper">
+<section class="main">
 
   <div class="chart"></div>
 
   <% if @hours %>
   <table>
     <tr>
-      <th>Date</th>
+      <th class="hideable">Date</th>
       <th>Time</th>
-      <th>Temperature</th>
-      <th>Pressure</th>
+      <th>Temp.</th>
+      <th class="hideable_2">Pressure</th>
       <th>Wind speed</th>
-      <th>Wind direction</th>
-      <th>Cloudiness</th>
+      <th class="hideable">Wind direction</th>
+      <th class="hideable_2">Cloudiness</th>
     </tr>
     <% @hours.each do |hour| %>
 
@@ -31,7 +33,7 @@
     temp_data.push({"weather_time" : (new Date(<%= (hour.weather_time.to_f * 1000) %>)), "temp" : <%= hour.temp %>})
     <% end %>
 
-    var w = 700;
+    var w = 600;
     var h = 300;
   var barPadding = 1;  // <-- New!
   var padding = 20;
@@ -59,10 +61,12 @@
   .orient("left");
 
   svg.append("svg:g")
+  .attr("class","axis")
   .attr("transform", "translate(0," + (h - (padding * 1.5)) + ")")
   .call(xAxis);
 
   svg.append("svg:g")
+  .attr("class","axis")
   .attr("transform", "translate(" + (padding * 1.5) + ",0)")
   .call(yAxis);
 
@@ -78,8 +82,8 @@ var lineGen = d3.svg.line()
 
 svg.append('svg:path')
 .attr('d', lineGen(temp_data))
-.attr('stroke', 'green')
-.attr('stroke-width', 2)
+.attr('stroke', '#30638A')
+.attr('stroke-width', 1)
 .attr('fill', 'none');
 
 // 
@@ -109,3 +113,4 @@ svg.append('svg:path')
 
 
 </section>
+</div>

@@ -1,9 +1,9 @@
 <tr>
-  <td><%= hour.weather_time.strftime('%B %e %Y') %></td>
+  <td class="hideable"><%= hour.weather_time.strftime('%B %e') %></td>
   <td><%= hour.weather_time.strftime('%l:%M %p') %></td>
-  <td><%= hour.temp %></td>
-  <td><%= hour.pressure %></td>
+  <td><%= hour.temp %>&deg;</td>
+  <td class="hideable_2"><%= hour.pressure %></td>
   <td><%= hour.wind_speed %></td>
-  <td><%= hour.wind_deg %></td>
-  <td><%= hour.cloudiness %></td>
+  <td class="hideable"><%= hour.wind_deg %></td>
+  <td class="hideable_2"><%= hour.cloudiness %></td>
 </tr>

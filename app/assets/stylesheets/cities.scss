@@ -46,16 +46,19 @@
   }
 }
 
-// .cityCard_contents::before {
-//   background: rgba(255,0,0,0.5);
-//   border: 1px solid red;
-//   z-index: -1;
-//   content: '';
-//   position: absolute;
-//   top: 0; right: 0; bottom: 0; left: 0;
-//   margin: -30px;
-//   -webkit-filter: blur(20px);
-//   filter: blur(20px);
-// }
+@media screen and (min-width: 500px) {
+  .hideable {
+    display: none;
+  }
+
+}
+
+
+@media screen and (max-width: 500px) {
+  .hideable_2 {
+    display: none;
+  }
+
+}
 
 
