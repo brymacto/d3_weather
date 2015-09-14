@@ -6,10 +6,24 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hind:400,300,600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Comfortaa:700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-<%= yield %>
+<header>
+  <div class="header_outer">
+  <span class="logo">
+    24<span class="h">H</span>
+  </span>
+  </div>
+</header>
+
+
+<section class="mainWrapper belowHeader">
+  <%= yield %>
+</section>
 
 </body>
 </html>

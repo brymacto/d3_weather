@@ -1,0 +1,37 @@
+body {
+  background-color: $c_bg;
+  margin: 0px;
+}
+
+header {
+  background-color: $c_blue2;
+  width: 100%;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  position: fixed;
+  .header_outer {
+    color: $c_white;
+     @include outer-container;
+  }
+}
+
+.mainWrapper {
+  @include outer-container;
+}
+
+.belowHeader {
+  padding-top: 7rem;
+}
+
+.logo {
+  font-family: 'Comfortaa', cursive;
+  font-size: 3rem;
+  // text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+  text-shadow: 1px 1px $c_blue1, 2px 2px $c_blue1,
+                3px 3px $c_blue1, 4px 4px $c_blue1,
+                5px 5px $c_blue1, 6px 6px $c_blue1,
+                7px 7px $c_blue1, 8px 8px $c_blue1;
+  .h {
+    // color: $c_blue1;
+  }
+}
