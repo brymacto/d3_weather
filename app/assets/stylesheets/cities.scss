@@ -12,6 +12,7 @@
   height: 20rem;
   position: relative;
   z-index: -1;
+  margin-bottom: 1em;
   .details {
     @include outer-container;
     h1 {

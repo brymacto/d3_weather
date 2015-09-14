@@ -12,7 +12,32 @@
 </head>
 <body>
 
-<header>
+  <header class="navigation" role="banner">
+
+    <div class="navigation-wrapper">
+
+
+      <a href="<%= root_path %>" class="logo">24<span class="h">H</span></a>
+      <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+      <nav role="navigation">
+        <ul id="js-navigation-menu" class="navigation-menu show">
+        <li class="nav-link">
+          <%= link_to "Cities", root_path  %>
+        </li>
+          <li class="nav-link">
+            <%= link_to "Add City", new_city_path  %>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+
+
+
+<!-- <header>
+
   <div class="header_outer">
   <span class="logo">
     
@@ -20,10 +45,10 @@
   </span>
   </div>
 </header>
+-->
 
 
-
-  <%= yield %>
+<%= yield %>
 
 </body>
 </html>

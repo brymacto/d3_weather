@@ -21,15 +21,16 @@ header {
 }
 
 .belowHeader {
-  margin-top: 7rem;
+  margin-top: 6rem;
 }
 .belowHeader__overlap {
-  margin-top: 6rem;
+  margin-top: 5rem;
 }
 
 .logo {
+  color: #fff;
   font-family: 'Comfortaa', cursive;
-  font-size: 3rem;
+  font-size: 2.5rem;
   // text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
   text-shadow: 1px 1px $c_blue1, 2px 2px $c_blue1,
                 3px 3px $c_blue1, 4px 4px $c_blue1,
@@ -38,8 +39,8 @@ header {
   .h {
     // color: $c_blue1;
   }
-  a {
-    color:#fff;
-    text-decoration: none;
+  &:hover {
+    color: transparentize(white, 0.3);
   }
+  
 }

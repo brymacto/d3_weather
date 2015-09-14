@@ -1,52 +1,42 @@
 
 
 <div class="cityCard belowHeader__overlap" style="background-image:url('<%= @flickr_photo_url %>')">
-    <div class="details">
-      <h1><%= @city.full_name  %></h1>    
-    </div>
+  <div class="details">
+    <h1><%= @city.full_name  %></h1>    
+  </div>
 </div>
 <section class="mainWrapper">
 
+<div class="chart"></div>
 
-<%= link_to 'edit this city', edit_city_path(@city)  %>
+  <% if @hours %>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Temperature</th>
+      <th>Pressure</th>
+      <th>Wind speed</th>
+      <th>Wind direction</th>
+      <th>Cloudiness</th>
+    </tr>
+    <% @hours.each do |hour| %>
 
+    <%= render hour %>
+    <% end %>
+  </table>
 
-<div>Name:</div>
-<div><%= @city.full_name  %></div>
-<div>Country:</div>
-<div><%= @city.country %></div>
+  <script>
+    var temp_data = []
+    <% @hours.each do |hour| %>
+    temp_data.push(<%= hour.temp %>)
+    <% end %>
 
-
-<% if @hours %>
-<h3>Hours</h3>
-
-<table>
-<tr>
-  <th>Date</th>
-  <th>Time</th>
-  <th>Temperature</th>
-  <th>Pressure</th>
-  <th>Wind speed</th>
-  <th>Wind direction</th>
-  <th>Cloudiness</th>
-</tr>
-<% @hours.each do |hour| %>
-
-<%= render hour %>
-<% end %>
-</table>
-
-<script>
-      var temp_data = []
-      <% @hours.each do |hour| %>
-      temp_data.push(<%= hour.temp %>)
-      <% end %>
-
-      var w = 500;
-      var h = 200;
+    var w = 500;
+    var h = 200;
   var barPadding = 1;  // <-- New!
   var padding = 20;
-  var svg = d3.select("body")
+  var svg = d3.select(".chart")
   .append("svg")
   .attr("width", w)
   .attr("height", h);
