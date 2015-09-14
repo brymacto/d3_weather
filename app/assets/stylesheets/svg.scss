@@ -1,4 +1,8 @@
-svg {border: 1px solid gainsboro;}
+svg {
+  border: 1px solid gainsboro;
+  display: block;
+  margin: 0 auto;
+}
 
 .axis path,
 .axis line {
