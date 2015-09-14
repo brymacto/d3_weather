@@ -8,6 +8,13 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
+    flickr_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
+    flickr_response = HTTParty.get(flickr_url)
+    flickr_photo = flickr_response['photos']['photo'][0]
+    @flickr_photo_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
+
+
+
     get_hours(@city)
   end
 
@@ -21,10 +28,11 @@ class CitiesController < ApplicationController
     @city = City.new(city_params.merge(:http_response => http_resp))
     @city.open_weather_id = response['city_id']
 
-    response_coords = HTTParty.get("http://api.openweathermap.org/data/2.5/weather?id=#{@city.open_weather_id}")
-    @city.long = response_coords['coord']['lon']
-    @city.lat = response_coords['coord']['lat']
-
+    if (@city.open_weather_id)
+      response_coords = HTTParty.get("http://api.openweathermap.org/data/2.5/weather?id=#{@city.open_weather_id}")
+      @city.long = response_coords['coord']['lon']
+      @city.lat = response_coords['coord']['lat']
+    end 
     if @city.save
       redirect_to cities_path
     else
