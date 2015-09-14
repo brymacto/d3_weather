@@ -25,15 +25,14 @@
     <%= render hour %>
     <% end %>
   </table>
-
-  <script>
+    <script>
     var temp_data = []
     <% @hours.each do |hour| %>
-    temp_data.push(<%= hour.temp %>)
+    temp_data.push({"weather_time" : (new Date(<%= (hour.weather_time.to_f * 1000) %>)), "temp" : <%= hour.temp %>})
     <% end %>
 
-    var w = 500;
-    var h = 200;
+    var w = 700;
+    var h = 300;
   var barPadding = 1;  // <-- New!
   var padding = 20;
   var svg = d3.select(".chart")
@@ -42,29 +41,47 @@
   .attr("height", h);
 
   var xScale = d3.scale.linear()
-  .domain([0, d3.max(temp_data)])
+  .domain([0, Math.max.apply(Math,temp_data.map(function(o){return o.weather_time;}))])
+
   .range([0, w]);
 
   var yScale = d3.scale.linear()
-  .domain([0, d3.max(temp_data)])
+  .domain([0, Math.max.apply(Math,temp_data.map(function(o){return o.temp;}))])
   .range([0, h - padding]);
 
 
-  svg.selectAll("rect")
-  .data(temp_data)
-  .enter()
-  .append("rect")
-  .attr("x", function(d, i) {
-    return i * (w / temp_data.length);
+// 
+var lineGen = d3.svg.line()
+  .x(function(d) {
+    return xScale(d.weather_time);
   })
-  .attr("y", function(d) {
-      return h - yScale(d);  //Height minus data value
-    })
-  .attr("width", w / temp_data.length - barPadding)
-  .attr("height", function(d) {
-    return yScale(d);
-  })
-  .attr("fill", 'gainsboro');
+  .y(function(d) {
+    return yScale(d.temp);
+  });
+
+svg.append('svg:path')
+  .attr('d', lineGen(temp_data))
+  .attr('stroke', 'green')
+  .attr('stroke-width', 2)
+  .attr('fill', 'none');
+
+// 
+
+  // svg.selectAll("rect")
+  // .data(temp_data)
+  // .enter()
+  // .append("rect")
+  // .attr("x", function(d, i) {
+  //   return i * (w / temp_data.length);
+  // })
+  // .attr("y", function(d) {
+  //     return h - yScale(d);  //Height minus data value
+  //   })
+  // .attr("width", w / temp_data.length - barPadding)
+  // .attr("height", function(d) {
+  //   return yScale(d);
+  // })
+  // .attr("fill", 'gainsboro');
 
 
 
