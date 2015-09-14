@@ -1,9 +1,13 @@
 
-<div class="cityCard">
-  <h1><%= @city.name  %></h1>
+<div class="cityCard" style="background-image:url(<%= @flickr_photo_url %>)">
+  <div class="cityCard_contents">
+    <h1><%= @city.name  %></h1>
+    
+  </div>
 </div>
 
-<%= image_tag @flickr_photo_url %>
+<%= image_tag @flickr_photo_thumb_url %>
+<h1><%= @city.name  %></h1>
 
 <%= link_to 'edit this city', edit_city_path(@city)  %>
 

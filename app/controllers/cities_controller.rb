@@ -12,6 +12,7 @@ class CitiesController < ApplicationController
     flickr_response = HTTParty.get(flickr_url)
     flickr_photo = flickr_response['photos']['photo'][0]
     @flickr_photo_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_b.jpg"
+    @flickr_photo_thumb_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
 
 
 
