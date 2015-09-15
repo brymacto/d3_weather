@@ -15,6 +15,20 @@ class HoursController < ApplicationController
     @hour = Hour.new
   end
 
+  def update
+    @hour = Hour.find(params[:id])
+    if @hour.update(hour_params)
+      # redirect_to @hour
+    else
+      render 'edit'
+    end
+  end
+
+
+  def destroy
+    @hour = Hour.find(params[:id])
+    @hour.destroy
+  end
   private
   def hour_params
     params.require(:hour).permit(:temp, :pressure, :humidity, :temp_min, :temp_max, :wind_speed, :wind_deg, :cloudiness, :description, :icon, :weather_time, :city_id)

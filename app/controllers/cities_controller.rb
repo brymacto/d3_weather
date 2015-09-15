@@ -8,7 +8,7 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
-    get_hours(@city)
+    # get_hours(@city)
   end
 
   def edit
@@ -39,6 +39,7 @@ class CitiesController < ApplicationController
 
 
     if @city.save
+      get_hours(@city)
       redirect_to cities_path
     else
       render 'new'
@@ -47,26 +48,64 @@ class CitiesController < ApplicationController
 
 
   def get_hours(city)
+    puts "*********** GETTING HOURS"
     response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name},#{city.country}&APPID=#{ENV['open_weather_key']}")
     hours_details = response['list']
-    @hours = []
-    hours_details.each do |hour_details|
-      @hours << Hour.new(
-        
-        temp: k_to_celsius(hour_details['main']['temp']), 
-        pressure: hour_details['main']['pressure'], 
-        humidity: hour_details['main']['humidity'],
-        temp_min:  k_to_celsius(hour_details['main']['temp_min']),
-        temp_max:  k_to_celsius(hour_details['main']['temp_max']),
-        wind_speed: hour_details['wind']['speed'],
-        wind_deg: hour_details['wind']['deg'],
-        cloudiness: hour_details['clouds']['all'],
-        weather_time: Time.at(hour_details['dt']),
-        # description:
-        # icon:
-        # For 2 above, API provides array.  TODO: handle arrays of weather.
-        city_id: params[:id]
-      )
+    # @hours = []
+    if (city.hours.count == 24)
+    puts "******* About to edit hours"
+      hours_details.each_with_index do |hour_details, index|
+        city.hours[index].update_all(
+        # Hour.create(
+          
+          temp: k_to_celsius(hour_details['main']['temp']), 
+          pressure: hour_details['main']['pressure'], 
+          humidity: hour_details['main']['humidity'],
+          temp_min:  k_to_celsius(hour_details['main']['temp_min']),
+          temp_max:  k_to_celsius(hour_details['main']['temp_max']),
+          wind_speed: hour_details['wind']['speed'],
+          wind_deg: hour_details['wind']['deg'],
+          cloudiness: hour_details['clouds']['all'],
+          weather_time: Time.at(hour_details['dt']),
+          # description:
+          # icon:
+          # For 2 above, API provides array.  TODO: handle arrays of weather.
+          city_id: city.id
+        )
+      end
+  else
+    puts "******* About to create hours"
+    city.hours.delete_all
+      hours_details.each do |hour_details|
+        Hour.create(          
+          temp: k_to_celsius(hour_details['main']['temp']), 
+          pressure: hour_details['main']['pressure'], 
+          humidity: hour_details['main']['humidity'],
+          temp_min:  k_to_celsius(hour_details['main']['temp_min']),
+          temp_max:  k_to_celsius(hour_details['main']['temp_max']),
+          wind_speed: hour_details['wind']['speed'],
+          wind_deg: hour_details['wind']['deg'],
+          cloudiness: hour_details['clouds']['all'],
+          weather_time: Time.at(hour_details['dt']),
+          # description:
+          # icon:
+          # For 2 above, API provides array.  TODO: handle arrays of weather.
+          city_id: city.id
+        )
+      end
+
+  end 
+
+
+
+  end
+
+  def update
+    @city = City.find(params[:id])
+    if @city.update(city_params)
+      redirect_to @city
+    else
+      render 'edit'
     end
   end
 
@@ -83,7 +122,7 @@ class CitiesController < ApplicationController
 
   def destroy
     @city = City.find(params[:id])
-    @city.destroy
+    @city.destroy_all
  
     redirect_to cities_path
   end

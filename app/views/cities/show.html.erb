@@ -14,7 +14,7 @@
 
   <div class="chart"></div>
 
-  <% if @hours %>
+  <% if @city.hours %>
   <table>
     <tr>
       <th class="hideable">Date</th>
@@ -25,7 +25,7 @@
       <th class="hideable">Wind direction</th>
       <th class="hideable_2">Cloudiness</th>
     </tr>
-    <% @hours.each do |hour| %>
+    <% @city.hours.each do |hour| %>
 
     <%= render hour %>
     <% end %>
@@ -37,7 +37,7 @@
 
   <script>
     var temp_data = []
-    <% @hours.each do |hour| %>
+    <% @city.hours.each do |hour| %>
     temp_data.push({"weather_time" : (new Date(<%= (hour.weather_time.to_f * 1000) %>)), "temp" : <%= hour.temp %>})
     <% end %>
 
