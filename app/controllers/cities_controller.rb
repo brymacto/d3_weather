@@ -9,7 +9,9 @@ class CitiesController < ApplicationController
   def show
     @city = City.find(params[:id])
     @hours = @city.hours.order(weather_time: :asc)
-    get_hours(@city)
+    if (time_diff(@city.hours.first.updated_at, Time.now) > 59)
+      get_hours(@city)
+    end
   end
 
   def edit
@@ -70,7 +72,6 @@ class CitiesController < ApplicationController
           weather_time: Time.at(hour_details['dt']),
           city_id: city.id
         )
-          binding.pry
       end
   else
     puts "******* About to create hours"
@@ -111,6 +112,20 @@ class CitiesController < ApplicationController
   def k_to_celsius(kelvins)
     (kelvins - 273.15).round(2)
   end
+
+  def time_diff(start_time, end_time)
+    seconds_diff = (start_time - end_time).to_i.abs
+
+    hours = seconds_diff / 3600
+    seconds_diff -= hours * 3600
+
+    minutes = seconds_diff / 60
+    # seconds_diff -= minutes * 60
+
+    # seconds = seconds_diff
+
+    # "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
+end
 
   # helper_method :get_hours
   # Uncomment the above to access method from view.
