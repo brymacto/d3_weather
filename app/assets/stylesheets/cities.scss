@@ -11,7 +11,7 @@
   text-align: center;
   height: 20rem;
   position: relative;
-  z-index: -1;
+  // z-index: 1;
   margin-bottom: 1em;
   .details {
     @include outer-container;
@@ -26,7 +26,22 @@
     text-transform: uppercase;
     font-size: 1.5em;
   }
+
   }
+  .photographer {
+  a {
+    position: absolute;
+    bottom:0px;
+    background-color: #000;
+    color: #fff;
+    padding: 0.5em 1em;
+    font-family: $f_body;
+    font-weight: bold;
+    right: 0px;
+    font-size: 0.6em;
+    // z-index: 100;
+  }
+}
   
 }
 

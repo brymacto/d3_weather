@@ -4,6 +4,9 @@
   <div class="details">
     <h1><%= @city.full_name  %></h1>    
   </div>
+  <div class="photographer">
+  <a href="<%= @flickr_user_url %>" target="_blank">Photography credit</a>
+  </div>
 </div>
 
 <div class="mainWrapper">
@@ -27,6 +30,11 @@
     <%= render hour %>
     <% end %>
   </table>
+
+
+<%= link_to "Edit this city", edit_city_path(@city) %>
+
+
   <script>
     var temp_data = []
     <% @hours.each do |hour| %>
