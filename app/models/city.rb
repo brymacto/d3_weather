@@ -10,8 +10,21 @@ class City < ActiveRecord::Base
     end
   end
 
+  def full_country
+    case country
+    when 'CA'
+      'Canada'
+    when 'US'
+      'United States'
+    when 'FR'
+      'France'
+    when 'PH'
+      'Philippines'
+    end
+  end
+
   def full_name 
-    "#{name.titleize}, #{country.upcase}"
+    "#{name.titleize}, #{full_country.upcase}"
   end
 
 end

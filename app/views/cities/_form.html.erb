@@ -16,8 +16,8 @@
 </div>
 
 <div class="field">
-  <%= f.label :country %><br>
-  <%= f.text_field :country %>
+  <%= f.label :country %><br>  
+  <%= f.select(:country, [['Canada', 'CA'], ['United States', 'US'], ['France', 'FR'], ['Philippines', 'PH']]) %>
 </div>
 
 <div>
