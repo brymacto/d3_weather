@@ -19,7 +19,7 @@ class CitiesController < ApplicationController
   end
 
   def create
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{params[:city][:name]},#{params[:city] [:country]}&APPID=#{ENV['open_weather_key']}")
+    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{params[:city][:name].gsub(' ','%20')},#{params[:city] [:country]}&APPID=#{ENV['open_weather_key']}")
     http_resp = response['cod']
     @city = City.new(city_params.merge(:http_response => http_resp))
     @city.open_weather_id = response['city_id']
@@ -30,7 +30,7 @@ class CitiesController < ApplicationController
       @city.lat = response_coords['coord']['lat']
     
 
-    flickr_api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
+    flickr_api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name.gsub(' ','%20')}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
     flickr_response = HTTParty.get(flickr_api_url)
     flickr_photo = flickr_response['photos']['photo'][0]
     flickr_userId = flickr_photo['owner']
