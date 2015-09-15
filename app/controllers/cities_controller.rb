@@ -8,7 +8,8 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
-    # get_hours(@city)
+    @hours = @city.hours.order(weather_time: :asc)
+    get_hours(@city)
   end
 
   def edit
@@ -55,7 +56,7 @@ class CitiesController < ApplicationController
     if (city.hours.count == 24)
     puts "******* About to edit hours"
       hours_details.each_with_index do |hour_details, index|
-        city.hours[index].update_all(
+        city.hours[index].update(
         # Hour.create(
           
           temp: k_to_celsius(hour_details['main']['temp']), 
@@ -67,11 +68,9 @@ class CitiesController < ApplicationController
           wind_deg: hour_details['wind']['deg'],
           cloudiness: hour_details['clouds']['all'],
           weather_time: Time.at(hour_details['dt']),
-          # description:
-          # icon:
-          # For 2 above, API provides array.  TODO: handle arrays of weather.
           city_id: city.id
         )
+          binding.pry
       end
   else
     puts "******* About to create hours"
