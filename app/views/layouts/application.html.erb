@@ -21,9 +21,9 @@
       <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
       <nav role="navigation">
         <ul id="js-navigation-menu" class="navigation-menu show">
-        <li class="nav-link">
-          <%= link_to "Cities", root_path  %>
-        </li>
+          <li class="nav-link">
+            <%= link_to "Cities", root_path  %>
+          </li>
           <li class="nav-link">
             <%= link_to "Add City", new_city_path  %>
           </li>
@@ -33,7 +33,15 @@
     </div>
   </header>
 
-<%= yield %>
+  <%= yield %>
+
+  <footer>
+    <div class="bm">
+      &copy; 2015 <a href="http://brymac.ca/" target="_blank">Bryan MacDiarmid</a><br />
+      Weather data: <a href="http://openweathermap.org/" target="_blank">OpenWeatherMap</a><br />
+      Photography: see individual city pages for links to photographers. Photos used under CC.
+    </div>
+  </footer>
 
 </body>
 </html>

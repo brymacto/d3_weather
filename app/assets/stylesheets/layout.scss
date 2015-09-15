@@ -16,6 +16,22 @@ header {
   }
 }
 
+footer {
+  @include outer-container;
+  .bm {
+    font-size: 0.75em;
+    @include span-columns(12)
+  }
+  border-top: 1px dotted $c_blue1;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  // .credits {
+  //   font-size: 0.75em;
+  //   @include span-columns(8)
+  // }
+
+}
+
 .mainWrapper {
   @include outer-container;
   padding: 1rem;
