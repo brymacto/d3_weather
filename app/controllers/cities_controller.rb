@@ -8,18 +8,6 @@ class CitiesController < ApplicationController
 
   def show
     @city = City.find(params[:id])
-    flickr_api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
-    flickr_response = HTTParty.get(flickr_api_url)
-    flickr_photo = flickr_response['photos']['photo'][0]
-    flickr_userId = flickr_photo['owner']
-    flickr_user_api_url = "https://api.flickr.com/services/rest/?method=flickr.urls.getUserProfile&api_key=#{ENV['flickr_key']}&user_id=#{flickr_userId}&format=rest"
-    flickr_user_response = HTTParty.get(flickr_user_api_url)
-    @flickr_user_url = flickr_user_response['rsp']['user']['url']
-    @flickr_photo_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_b.jpg"
-    @flickr_photo_thumb_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
-
-
-
     get_hours(@city)
   end
 
@@ -38,6 +26,18 @@ class CitiesController < ApplicationController
       @city.long = response_coords['coord']['lon']
       @city.lat = response_coords['coord']['lat']
     end 
+
+    flickr_api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
+    flickr_response = HTTParty.get(flickr_api_url)
+    flickr_photo = flickr_response['photos']['photo'][0]
+    flickr_userId = flickr_photo['owner']
+    flickr_user_api_url = "https://api.flickr.com/services/rest/?method=flickr.urls.getUserProfile&api_key=#{ENV['flickr_key']}&user_id=#{flickr_userId}&format=rest"
+    flickr_user_response = HTTParty.get(flickr_user_api_url)
+    @city.photo_user_url = flickr_user_response['rsp']['user']['url']
+    @city.photo_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_b.jpg"
+    # @flickr_photo_thumb_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
+
+
     if @city.save
       redirect_to cities_path
     else

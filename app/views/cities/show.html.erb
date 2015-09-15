@@ -1,11 +1,11 @@
 
 
-<div class="cityCard belowHeader__overlap" style="background-image:url('<%= @flickr_photo_url %>')">
+<div class="cityCard belowHeader__overlap" style="background-image:url('<%= @city.photo_url %>')">
   <div class="details">
     <h1><%= @city.full_name  %></h1>    
   </div>
   <div class="photographer">
-  <a href="<%= @flickr_user_url %>" target="_blank">Photography credit</a>
+  <a href="<%= @city.photo_user_url %>" target="_blank">Photography credit</a>
   </div>
 </div>
 
