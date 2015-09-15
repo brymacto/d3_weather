@@ -50,11 +50,10 @@ class CitiesController < ApplicationController
 
   def get_hours(city)
     puts "*********** GETTING HOURS"
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name},#{city.country}&APPID=#{ENV['open_weather_key']}")
+    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}")
     hours_details = response['list']
     # @hours = []
     if (city.hours.count == 24)
-      puts "******* About to edit hours"
       hours_details.each_with_index do |hour_details, index|
         city.hours[index].update(
         # Hour.create(
@@ -72,7 +71,6 @@ class CitiesController < ApplicationController
           )
       end
     else
-      puts "******* About to create hours"
       city.hours.delete_all
       hours_details.each do |hour_details|
         Hour.create(          
