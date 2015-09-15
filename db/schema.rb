@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915010124) do
+ActiveRecord::Schema.define(version: 20150915012238) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150915010124) do
     t.string   "http_response"
     t.string   "photo_url"
     t.string   "photo_user_url"
+    t.string   "photo_thumb_url"
   end
 
   create_table "hours", force: :cascade do |t|

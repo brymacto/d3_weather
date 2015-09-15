@@ -21,7 +21,7 @@
     background-color: #000;
     color: #fff;
     padding: 0.5em 1em;
-    font-family: 'Comfortaa', cursive;
+    font-family: 'Comfortaa', 'sans serif';
     font-weight: bold;
     text-transform: uppercase;
     font-size: 1.5em;
@@ -61,6 +61,39 @@
   }
 }
 
+.thumb {
+  width: 150px;
+  float: left;
+  background-color: #000;
+  margin: 0.5em;
+  display: block;
+}
+
+.thumb_city {
+  background-color: #000;
+  color: #fff;
+  display: block;
+  margin:0px;
+  padding: 0.25em;
+  text-align: center;
+  font-family: 'Comfortaa', 'sans serif';
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  height: 190px;
+  background-repeat: no-repeat;
+  position: relative;
+  span {
+    position: absolute;
+    bottom: 0.5em;
+    left: 0.5em;
+  }
+  &:hover {
+    color: darken(#fff, 20%);
+  }
+
+}
+
 @media screen and (max-width: 800px) {
   .hideable {
     display: none;
@@ -75,5 +108,8 @@
   }
 
 }
+
+
+
 
 

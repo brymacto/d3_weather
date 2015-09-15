@@ -23,8 +23,12 @@ class City < ActiveRecord::Base
     end
   end
 
+  def full_city
+    name.titleize
+  end
+
   def full_name 
-    "#{name.titleize}, #{full_country.upcase}"
+    "#{full_city}, #{full_country}"
   end
 
 end

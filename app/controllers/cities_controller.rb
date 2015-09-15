@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   include ActiveModel::Validations
-  
+
   include HTTParty
   def index
     @cities = City.all.order(name: :asc)
@@ -28,7 +28,7 @@ class CitiesController < ApplicationController
       response_coords = HTTParty.get("http://api.openweathermap.org/data/2.5/weather?id=#{@city.open_weather_id}")
       @city.long = response_coords['coord']['lon']
       @city.lat = response_coords['coord']['lat']
-    end 
+    
 
     flickr_api_url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['flickr_key']}&text=#{@city.name}&license=1%2C2%2C3%2C4%2C5%2C6%2C7&sort=relevance&accuracy=11&lat=#{@city.lat}&lon=#{@city.long}&format=json&nojsoncallback=1"
     flickr_response = HTTParty.get(flickr_api_url)
@@ -38,17 +38,15 @@ class CitiesController < ApplicationController
     flickr_user_response = HTTParty.get(flickr_user_api_url)
     @city.photo_user_url = flickr_user_response['rsp']['user']['url']
     @city.photo_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_b.jpg"
-    # @flickr_photo_thumb_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
-
-
+    @city.photo_thumb_url = "https://farm#{flickr_photo['farm']}.staticflickr.com/#{flickr_photo['server']}/#{flickr_photo['id']}_#{flickr_photo['secret']}_q.jpg"
+    end
     if @city.save
       get_hours(@city)
-      redirect_to cities_path
+      redirect_to city_path(@city)
     else
       render 'new'
     end
   end
-
 
   def get_hours(city)
     puts "*********** GETTING HOURS"
@@ -56,11 +54,11 @@ class CitiesController < ApplicationController
     hours_details = response['list']
     # @hours = []
     if (city.hours.count == 24)
-    puts "******* About to edit hours"
+      puts "******* About to edit hours"
       hours_details.each_with_index do |hour_details, index|
         city.hours[index].update(
         # Hour.create(
-          
+
           temp: k_to_celsius(hour_details['main']['temp']), 
           pressure: hour_details['main']['pressure'], 
           humidity: hour_details['main']['humidity'],
@@ -71,11 +69,11 @@ class CitiesController < ApplicationController
           cloudiness: hour_details['clouds']['all'],
           weather_time: Time.at(hour_details['dt']),
           city_id: city.id
-        )
+          )
       end
-  else
-    puts "******* About to create hours"
-    city.hours.delete_all
+    else
+      puts "******* About to create hours"
+      city.hours.delete_all
       hours_details.each do |hour_details|
         Hour.create(          
           temp: k_to_celsius(hour_details['main']['temp']), 
@@ -91,12 +89,10 @@ class CitiesController < ApplicationController
           # icon:
           # For 2 above, API provides array.  TODO: handle arrays of weather.
           city_id: city.id
-        )
+          )
       end
 
-  end 
-
-
+    end
 
   end
 
@@ -125,10 +121,7 @@ class CitiesController < ApplicationController
     # seconds = seconds_diff
 
     # "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
-end
-
-  # helper_method :get_hours
-  # Uncomment the above to access method from view.
+  end
 
   def new
     @city = City.new
@@ -136,18 +129,16 @@ end
 
   def destroy
     @city = City.find(params[:id])
-    @city.destroy_all
- 
+    @city.destroy
+
     redirect_to cities_path
   end
 
-
   private
-    def city_params
-      params.require(:city).permit(:name, :country, :http_response)
-    end
+  def city_params
+    params.require(:city).permit(:name, :country, :http_response)
+  end
 
 end
-
 
 # :temp, :pressure, :humidity, :temp_min, :temp_max, :wind_speed, :wind_deg, :cloudiness, :description, :icon, :city_id

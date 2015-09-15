@@ -1,12 +1,7 @@
 <section class="mainWrapper belowHeader">
-<h1>Cities</h1>
-<%= link_to "New city", cities_new_path  %>
-<div>Total number of cities: <%= @cities.count %></div>
+<h1>24H Weather</h1>
 <% @cities.each do |city| %>
-<div>Name:</div>
-<div><%= link_to city.name, city_path(city)  %></div>
-<div>Country:</div>
-<div><%= city.country %></div>
+<%= render city %>
 <% end %>
 </section>
 
