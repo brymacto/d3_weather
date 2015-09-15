@@ -1,7 +1,7 @@
 <section class="mainWrapper belowHeader">
 <h1>Cities#edit</h1>
 <%= render 'form' %>
+<%= link_to 'Delete this city',  @city,  method: :delete, data: { confirm: 'Are you sure?' } %>
 </section>
 
 
-<%= link_to 'Delete this city',  @city,  method: :delete, data: { confirm: 'Are you sure?' } %>
