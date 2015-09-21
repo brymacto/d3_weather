@@ -50,6 +50,8 @@ class CitiesController < ApplicationController
 
   def get_hours(city)
     puts "*********** GETTING HOURS"
+    puts "URL: "
+    puts "http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}"
     response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}")
     hours_details = response['list']
     # @hours = []
@@ -114,11 +116,8 @@ class CitiesController < ApplicationController
     seconds_diff -= hours * 3600
 
     minutes = seconds_diff / 60
-    # seconds_diff -= minutes * 60
 
-    # seconds = seconds_diff
-
-    # "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
+    (hours * 60) + minutes
   end
 
   def new
