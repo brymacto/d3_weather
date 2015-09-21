@@ -49,50 +49,53 @@ class CitiesController < ApplicationController
   end
 
   def get_hours(city)
-    puts "*********** GETTING HOURS"
-    puts "URL: "
-    puts "http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}"
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}")
-    hours_details = response['list']
-    # @hours = []
-    if (city.hours.count == 24)
-      hours_details.each_with_index do |hour_details, index|
-        city.hours[index].update(
-        # Hour.create(
 
-          temp: k_to_celsius(hour_details['main']['temp']), 
-          pressure: hour_details['main']['pressure'], 
-          humidity: hour_details['main']['humidity'],
-          temp_min:  k_to_celsius(hour_details['main']['temp_min']),
-          temp_max:  k_to_celsius(hour_details['main']['temp_max']),
-          wind_speed: hour_details['wind']['speed'],
-          wind_deg: hour_details['wind']['deg'],
-          cloudiness: hour_details['clouds']['all'],
-          weather_time: Time.at(hour_details['dt']),
-          city_id: city.id
-          )
-      end
-    else
-      city.hours.delete_all
-      hours_details.each do |hour_details|
-        Hour.create(          
-          temp: k_to_celsius(hour_details['main']['temp']), 
-          pressure: hour_details['main']['pressure'], 
-          humidity: hour_details['main']['humidity'],
-          temp_min:  k_to_celsius(hour_details['main']['temp_min']),
-          temp_max:  k_to_celsius(hour_details['main']['temp_max']),
-          wind_speed: hour_details['wind']['speed'],
-          wind_deg: hour_details['wind']['deg'],
-          cloudiness: hour_details['clouds']['all'],
-          weather_time: Time.at(hour_details['dt']),
-          # description:
-          # icon:
-          # For 2 above, API provides array.  TODO: handle arrays of weather.
-          city_id: city.id
-          )
-      end
+# Due to OpenWeatherMap discontinuing access to their API, the below code is commented out.
 
-    end
+    # puts "*********** GETTING HOURS"
+    # puts "URL: "
+    # puts "http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}"
+    # response = HTTParty.get("http://api.openweathermap.org/data/2.5/history/city?q=#{city.name.gsub(' ','%20')},#{city.country}&APPID=#{ENV['open_weather_key']}")
+    # hours_details = response['list']
+    # # @hours = []
+    # if (city.hours.count == 24)
+    #   hours_details.each_with_index do |hour_details, index|
+    #     city.hours[index].update(
+    #     # Hour.create(
+
+    #       temp: k_to_celsius(hour_details['main']['temp']), 
+    #       pressure: hour_details['main']['pressure'], 
+    #       humidity: hour_details['main']['humidity'],
+    #       temp_min:  k_to_celsius(hour_details['main']['temp_min']),
+    #       temp_max:  k_to_celsius(hour_details['main']['temp_max']),
+    #       wind_speed: hour_details['wind']['speed'],
+    #       wind_deg: hour_details['wind']['deg'],
+    #       cloudiness: hour_details['clouds']['all'],
+    #       weather_time: Time.at(hour_details['dt']),
+    #       city_id: city.id
+    #       )
+    #   end
+    # else
+    #   city.hours.delete_all
+    #   hours_details.each do |hour_details|
+    #     Hour.create(          
+    #       temp: k_to_celsius(hour_details['main']['temp']), 
+    #       pressure: hour_details['main']['pressure'], 
+    #       humidity: hour_details['main']['humidity'],
+    #       temp_min:  k_to_celsius(hour_details['main']['temp_min']),
+    #       temp_max:  k_to_celsius(hour_details['main']['temp_max']),
+    #       wind_speed: hour_details['wind']['speed'],
+    #       wind_deg: hour_details['wind']['deg'],
+    #       cloudiness: hour_details['clouds']['all'],
+    #       weather_time: Time.at(hour_details['dt']),
+    #       # description:
+    #       # icon:
+    #       # For 2 above, API provides array.  TODO: handle arrays of weather.
+    #       city_id: city.id
+    #       )
+    #   end
+
+    # end
 
   end
 
